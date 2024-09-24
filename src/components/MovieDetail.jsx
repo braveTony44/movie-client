@@ -58,6 +58,7 @@ function MovieDetail() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top of the page
     getMovieDetail();
   }, [title]);
 

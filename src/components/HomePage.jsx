@@ -29,7 +29,13 @@ function HomePage() {
       setHasError(false);
     } catch (error) {
       console.error('Error fetching movies', error);
-      setHasError(true);
+  
+      if (error.response && error.response.status === 429) {
+        // Handle the "Too Many Requests" error (HTTP 429)
+        setHasError('tooManyRequests');
+      } else {
+        setHasError(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -52,6 +58,17 @@ function HomePage() {
     );
   }
 
+  if (hasError === 'tooManyRequests') {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-900">
+        <div className="text-white text-center bg-red-600 px-8 py-4 rounded-lg shadow-lg">
+          <p className="text-2xl font-bold">Too Many Requests</p>
+          <p className="text-lg">You've made too many requests. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
+  
   if (hasError) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-900">

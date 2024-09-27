@@ -80,9 +80,11 @@ function Download() {
   // Handle General Errors
   if (error) {
     return (
-      <div className="text-center text-red-600 h-screen flex items-center justify-center">
-        <p>{error}</p>
+      <section className="text-gray-400 body-font bg-gray-900 h-screen flex items-center justify-center">
+      <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg mx-auto">
+        <p className="text-2xl font-bold mb-4">{error}</p>
       </div>
+    </section>
     );
   }
 

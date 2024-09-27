@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
+
 export const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function HomePage() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
   const [hasError, setHasError] = useState(false); // Error state
+
+
 
   const limitWords = (text, wordLimit) => {
     if (!text) return '';
@@ -85,7 +88,7 @@ function HomePage() {
     <>
       <BlockBusterOptions />
       <section className="text-gray-400 body-font bg-gray-900">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container capitalize px-5 py-24 mx-auto">
           <div className="flex flex-wrap w-full mb-20">
             <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
@@ -106,9 +109,11 @@ function HomePage() {
                       alt={movie.title}
                     />
                   </Link>
+                  
                   <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
                     {movie.type}
                   </h3>
+
                   <h2 className="text-lg text-white font-medium title-font mb-4">
                     {movie.title}
                   </h2>

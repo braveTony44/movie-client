@@ -24,7 +24,14 @@ function Comman({ type }) {
 
     try {
       // eslint-disable-next-line react/prop-types
-      const apiType = type.toLowerCase() === 'movies' ? 'movie' : type.toLowerCase();
+      const apiType = type.toLowerCase() === 'movies' 
+      ? 'movie' 
+      // eslint-disable-next-line react/prop-types
+      : type.toLowerCase() === 'tv shows' 
+        ? 'tv show' 
+        // eslint-disable-next-line react/prop-types
+        : type.toLowerCase();
+       
       const res = await axios.get(`${baseUrl}/movie/get/type/${apiType}`);
       if (res.data && res.data.response) {
         setMovies(res.data.response);
@@ -46,7 +53,7 @@ function Comman({ type }) {
 
   if (loading) {
     return (
-      <section className="text-gray-400 body-font bg-gray-900 h-screen flex items-center justify-center">
+      <section className="text-gray-400 body-font  bg-gray-900 h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-indigo-500" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -76,8 +83,8 @@ function Comman({ type }) {
   }
 
   return (
-    <section className="text-gray-400 body-font bg-gray-900">
-      <div className="container px-5 md:py-24 pt-40 pb-28 mx-auto">
+    <section className="text-gray-400  body-font bg-gray-900">
+      <div className="container px-5 capitalize md:py-24 pt-40 pb-28 mx-auto">
         <div className="flex flex-wrap w-full mb-20">
           <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
@@ -87,7 +94,7 @@ function Comman({ type }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap -m-4">
+        <div className="flex capitalize flex-wrap -m-4">
           {movies.map((movie, idx) => (
             <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
               <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">

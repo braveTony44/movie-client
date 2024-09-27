@@ -7,7 +7,7 @@ function BlockBusterOptions() {  // Fixed naming convention
   return (
     <div>
       <section className="text-gray-400 mt-3 body-font bg-gray-900">
-        <div className="container flex items-center justify-center px-5 md:pt-20 pt-40 mx-auto">
+        <div className="container flex capitalize items-center justify-center px-5 md:pt-20 pt-40 mx-auto">
           <div className="flex flex-wrap gap-2 capitalize -m-4">
             {genres.map((genre, idx) => (
               <div key={idx} className="p-1">

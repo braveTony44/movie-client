@@ -73,7 +73,7 @@ function Search() {
 
   return (
     <section className="text-gray-400 body-font bg-gray-900">
-      <div className="container px-5 md:py-24 pt-40 pb-28 mx-auto">
+      <div className="container capitalize px-5 md:py-24 pt-40 pb-28 mx-auto">
         <div className="flex flex-wrap w-full mb-20">
           <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">

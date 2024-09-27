@@ -140,7 +140,7 @@ function CreateMovie() {
             <option value="">Select Type</option>
             <option value="Documentary">Documentary</option>
             <option value="Movie">Movie</option>
-            <option value="Tv Shows">Tv Shows</option>
+            <option value="Tv Show">Tv Show</option>
           </select>
         </div>
 

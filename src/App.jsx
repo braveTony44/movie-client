@@ -1,9 +1,12 @@
+// App.js
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect } from 'react';
 import Spinner from './components/Spinner'; // Example loading spinner component
 import Layout from './components/Layout';
 import CreateMovie from './components/CreateMovie';
+import Download from './components/Download';
+
 
 // Lazy load components
 const HomePage = lazy(() => import('./components/HomePage'));
@@ -23,25 +26,24 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <>
-      {/* Suspense with a better fallback UI */}
-     <Layout>
-     <Suspense fallback={<Spinner />}>
-        <ScrollToTop />
-        <Routes>
-          <Route path='/' element={<HomePage type={"Here you can watch and download Movies and TV series"} />} />
-          <Route path='/movies' element={<Comman type={"Movies"} />} />
-          <Route path='/tv-series' element={<Comman type={"Tv Shows"} />} />
-          <Route path='/documentary' element={<Comman type={"Documentary"} />} />
-          <Route path='/movies/:genre' element={<Genre />} />
-          <Route path='/search' element={<Search />} />
-          <Route path="/admin/create/movie" element={<CreateMovie />} />
-          <Route path='/movies/detail/:title' element={<MovieDetail />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </Suspense>
-     </Layout>
-    </>
+      <Layout>
+        <Suspense fallback={<Spinner />}>
+  
+          <Routes>
+            <Route path='/' element={<HomePage type={"Here you can watch and download Movies and TV series"} />} />
+            <Route path='/movies' element={<Comman type={"Movies"} />} />
+            <Route path='/tv-series' element={<Comman type={"Tv Shows"} />} />
+            <Route path='/download/:title' element={<Download />} />
+            <Route path='/documentary' element={<Comman type={"Documentary"} />} />
+            <Route path='/movies/:genre' element={<Genre />} />
+            <Route path='/search' element={<Search />} />
+            <Route path="/admin/create/movie" element={<CreateMovie />} />
+            <Route path='/movies/detail/:title' element={<MovieDetail />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+  
   );
 }
 

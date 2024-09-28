@@ -130,7 +130,9 @@ function ContactUs() {
                 <button
                   onClick={handleSubmit}
                   className={`flex mx-auto text-white border-0 py-2 px-8 focus:outline-none rounded text-lg transition-colors duration-200 ease-in-out ${
-                    isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600"
+                    isLoading
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-indigo-500 hover:bg-indigo-600"
                   }`}
                   disabled={isLoading} // Disable the button while loading
                 >
@@ -140,7 +142,7 @@ function ContactUs() {
               {error && (
                 <div className="p-2 w-full">
                   <p className="text-red-500 text-center">{error}</p>
-                  </div>
+                </div>
               )}
               {success && (
                 <div className="p-2 w-full">
@@ -148,8 +150,13 @@ function ContactUs() {
                 </div>
               )}
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-800 text-center">
-                <span>Email : </span>
-                <a className="text-indigo-400">manmovie162@gmail.com</a>
+                <span>Email: </span>
+                <a
+                  href="mailto:manmovie162@gmail.com"
+                  className="text-indigo-400"
+                >
+                  manmovie162@gmail.com
+                </a>
               </div>
             </div>
           </div>
@@ -160,4 +167,3 @@ function ContactUs() {
 }
 
 export default ContactUs;
-

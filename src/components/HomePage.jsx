@@ -101,14 +101,14 @@ function HomePage() {
           <div className="flex flex-wrap -m-4">
             {movies ? movies.map((movie, idx) => (
               <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
-                <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
+
                   <Link to={`/movies/detail/${movie.title}`}>
+                <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
                     <img
                       className="max-h-80 rounded w-full object-cover mb-6"
                       src={movie.posterIMG || '/placeholder-image.png'} // Fallback to a placeholder
                       alt={movie.title}
                     />
-                  </Link>
                   
                   <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
                     {movie.type}
@@ -121,6 +121,8 @@ function HomePage() {
                     {limitWords(movie.shortDesc, 20)}
                   </p>
                 </div>
+                  </Link>
+
               </div>
             )):(<div className="m-auto h-screen bg-gray-900">
               <div className="text-white text-center bg-red-600 px-8 py-4 rounded-lg shadow-lg">

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { baseUrl } from './HomePage';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "./HomePage";
 
 function Comman({ type }) {
   const [movies, setMovies] = useState([]);
@@ -9,10 +9,10 @@ function Comman({ type }) {
   const [error, setError] = useState(null);
 
   const limitWords = (text, wordLimit) => {
-    if (!text) return '';
-    const words = text.split(' ');
+    if (!text) return "";
+    const words = text.split(" ");
     if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(' ') + '...';
+      return words.slice(0, wordLimit).join(" ") + "...";
     }
     return text;
   };
@@ -20,18 +20,18 @@ function Comman({ type }) {
   const getMoviesByType = async () => {
     setLoading(true);
     setError(null);
-     
 
     try {
       // eslint-disable-next-line react/prop-types
-      const apiType = type.toLowerCase() === 'movies' 
-      ? 'movie' 
-      // eslint-disable-next-line react/prop-types
-      : type.toLowerCase() === 'tv shows' 
-        ? 'tv show' 
-        // eslint-disable-next-line react/prop-types
-        : type.toLowerCase();
-       
+      const apiType =
+        type.toLowerCase() === "movies"
+          ? "movie"
+          : // eslint-disable-next-line react/prop-types
+          type.toLowerCase() === "tv shows"
+          ? "tv show"
+          : // eslint-disable-next-line react/prop-types
+            type.toLowerCase();
+
       const res = await axios.get(`${baseUrl}/movie/get/type/${apiType}`);
       if (res.data && res.data.response) {
         setMovies(res.data.response);
@@ -40,7 +40,7 @@ function Comman({ type }) {
         setMovies([]);
       }
     } catch (err) {
-      setError('Failed to load movies. Please try again later.');
+      setError("Failed to load movies. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,10 @@ function Comman({ type }) {
     return (
       <section className="text-gray-400 body-font  bg-gray-900 h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-indigo-500" role="status">
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-indigo-500"
+            role="status"
+          >
             <span className="visually-hidden">Loading...</span>
           </div>
           <p className="text-white mt-4">Loading {type}...</p>
@@ -97,24 +100,24 @@ function Comman({ type }) {
         <div className="flex capitalize flex-wrap -m-4">
           {movies.map((movie, idx) => (
             <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
-                <Link to={`/movies/detail/${movie.title}`}>
+              <Link to={`/movies/detail/${movie.title}`}>
+                <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
                   <img
                     className="max-h-80 rounded w-full object-cover mb-6"
                     src={movie.posterIMG}
                     alt={movie.title}
                   />
-                </Link>
-                <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
-                  {movie.type}
-                </h3>
-                <h2 className="text-lg text-white font-medium title-font mb-4">
-                  {movie.title}
-                </h2>
-                <p className="leading-relaxed text-base">
-                  {limitWords(movie.shortDesc, 20)}
-                </p>
-              </div>
+                  <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
+                    {movie.type}
+                  </h3>
+                  <h2 className="text-lg text-white font-medium title-font mb-4">
+                    {movie.title}
+                  </h2>
+                  <p className="leading-relaxed text-base">
+                    {limitWords(movie.shortDesc, 20)}
+                  </p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

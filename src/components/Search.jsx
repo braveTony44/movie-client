@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { baseUrl } from './HomePage';
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "./HomePage";
 
 function Search() {
   const [movies, setMovies] = useState([]);
@@ -10,13 +10,15 @@ function Search() {
 
   // Get the query from the URL using useLocation and URLSearchParams
   const location = useLocation();
-  const query = new URLSearchParams(location.search).get('q');
+  const query = new URLSearchParams(location.search).get("q");
 
   // Limit the number of words shown in the movie description
   const limitWords = (text, wordLimit) => {
-    if (!text) return '';
-    const words = text.split(' ');
-    return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : text;
+    if (!text) return "";
+    const words = text.split(" ");
+    return words.length > wordLimit
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : text;
   };
 
   // Fetch data by query
@@ -28,10 +30,10 @@ function Search() {
       if (res.status === 200 && res.data.response.length > 0) {
         setMovies(res.data.response);
       } else {
-        setError('No movies found for this search.');
+        setError("No movies found for this search.");
       }
     } catch (err) {
-      setError('Error fetching movies. Please try again.');
+      setError("Error fetching movies. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -86,24 +88,24 @@ function Search() {
         <div className="flex flex-wrap -m-4">
           {movies.map((movie, idx) => (
             <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
-              <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
-                <Link to={`/movies/detail/${movie.title}`}>
+              <Link to={`/movies/detail/${movie.title}`}>
+                <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
                   <img
                     className="max-h-80 rounded w-full object-cover mb-6"
                     src={movie.posterIMG}
                     alt={movie.title}
                   />
-                </Link>
-                <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
-                  {movie.type}
-                </h3>
-                <h2 className="text-lg text-white font-medium title-font mb-4">
-                  {movie.title}
-                </h2>
-                <p className="leading-relaxed text-base">
-                  {limitWords(movie.shortDesc, 20)}
-                </p>
-              </div>
+                  <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
+                    {movie.type}
+                  </h3>
+                  <h2 className="text-lg text-white font-medium title-font mb-4">
+                    {movie.title}
+                  </h2>
+                  <p className="leading-relaxed text-base">
+                    {limitWords(movie.shortDesc, 20)}
+                  </p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

@@ -149,7 +149,7 @@ function ContactUs() {
               )}
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-800 text-center">
                 <span>Email : </span>
-                <a className="text-indigo-400">example@email.com</a>
+                <a className="text-indigo-400">manmovie162@gmail.com</a>
               </div>
             </div>
           </div>

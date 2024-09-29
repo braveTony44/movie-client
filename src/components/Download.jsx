@@ -129,7 +129,7 @@ function Download() {
                       title={episode.title}
                       className="title-font font-medium text-white capitalize"
                     >
-                      {episode.title} - Download - EP {episode.episodeNumber}
+                      {episode.title} - Download - S0{episode.season} EP {episode.episodeNumber}
                     </span>
                   </div>
                 </a>

@@ -86,6 +86,7 @@ function Genre() {
                 <Link to={`/movies/detail/${movie.title}`}>
                   <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
                     <img
+                     loading="lazy"
                       className="max-h-80 rounded w-full object-cover mb-6"
                       src={movie.posterIMG}
                       alt={`Poster for ${movie.title}`} // Descriptive alt text

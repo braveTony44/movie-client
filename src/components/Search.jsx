@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Helmet } from "react-helmet-async"; // Import Helmet
 import { baseUrl } from "./HomePage";
 
 function Search() {
@@ -74,43 +75,55 @@ function Search() {
   }
 
   return (
-    <section className="text-gray-400 body-font bg-gray-900">
-      <div className="container capitalize px-5 md:py-24 pt-40 pb-28 mx-auto">
-        <div className="flex flex-wrap w-full mb-20">
-          <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
-              Search results for: {query}
-            </h1>
-            <div className="h-1 w-20 bg-indigo-500 rounded"></div>
+    <>
+      {/* Helmet section for dynamic title and meta description */}
+      <Helmet>
+        <title>Search Results for {query} - MovieCum</title>
+        <meta
+          name="description"
+          content={`Find the best results for movies related to ${query} on MovieCum.`}
+        />
+      </Helmet>
+
+      <section className="text-gray-400 body-font bg-gray-900">
+        <div className="container capitalize px-5 md:py-24 pt-40 pb-28 mx-auto">
+          <div className="flex flex-wrap w-full mb-20">
+            <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
+              <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
+                Search results for: {query}
+              </h1>
+              <div className="h-1 w-20 bg-indigo-500 rounded"></div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap -m-4">
+            {movies.map((movie, idx) => (
+              <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
+                <Link to={`/movies/detail/${movie.title}`}>
+                  <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
+                    <img
+                      loading="lazy"
+                      className="max-h-80 rounded w-full object-cover mb-6"
+                      src={movie.posterIMG}
+                      alt={movie.title}
+                    />
+                    <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
+                      {movie.type}
+                    </h3>
+                    <h2 className="text-lg text-white font-medium title-font mb-4">
+                      {movie.title}
+                    </h2>
+                    <p className="leading-relaxed text-base">
+                      {limitWords(movie.shortDesc, 20)}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
-
-        <div className="flex flex-wrap -m-4">
-          {movies.map((movie, idx) => (
-            <div key={idx} className="xl:w-1/4 md:w-1/2 p-4">
-              <Link to={`/movies/detail/${movie.title}`}>
-                <div className="bg-gray-800 bg-opacity-40 p-6 rounded-lg">
-                  <img
-                    className="max-h-80 rounded w-full object-cover mb-6"
-                    src={movie.posterIMG}
-                    alt={movie.title}
-                  />
-                  <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
-                    {movie.type}
-                  </h3>
-                  <h2 className="text-lg text-white font-medium title-font mb-4">
-                    {movie.title}
-                  </h2>
-                  <p className="leading-relaxed text-base">
-                    {limitWords(movie.shortDesc, 20)}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

@@ -3,13 +3,13 @@ import ContactUs from "./ContactUs";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { baseUrl } from "./HomePage";
-import Download from "./Download";
+import { Helmet } from "react-helmet-async";
 
 function MovieDetail() {
   const [movieData, setMovieData] = useState({
     shortDesc: "",
     longDesc: "",
-    type:"",
+    type: "",
     posterIMG: "",
     movieTitle: "",
     releaseYear: "",
@@ -19,7 +19,7 @@ function MovieDetail() {
     genres: [],
     availQualitySample: [],
     availQuality: [],
-    availDownloads: []
+    availDownloads: [],
   });
 
   const [loading, setLoading] = useState(true);
@@ -33,8 +33,6 @@ function MovieDetail() {
       setLoading(true);
       const { data } = await axios.get(`${baseUrl}/movie/get/${title}`);
       const movie = data.response;
-    
-   
 
       setMovieData({
         shortDesc: movie.shortDesc,
@@ -49,7 +47,7 @@ function MovieDetail() {
         genres: movie.genres,
         availQualitySample: movie.availQualitySample,
         availQuality: movie.availQuality,
-        availDownloads: movie.availDownloads
+        availDownloads: movie.availDownloads,
       });
       setHasError(false);
     } catch (error) {
@@ -59,7 +57,7 @@ function MovieDetail() {
 
       if (error.response && error.response.status === 429) {
         // Handle the "Too Many Requests" error (HTTP 429)
-        setHasError('tooManyRequests');
+        setHasError("tooManyRequests");
       } else {
         setHasError(true);
       }
@@ -86,14 +84,17 @@ function MovieDetail() {
     genres,
     availQualitySample,
     availQuality,
-    availDownloads
+    availDownloads,
   } = movieData;
 
   if (loading) {
     return (
       <section className="text-gray-400 body-font bg-gray-900 h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-indigo-500" role="status">
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-indigo-500"
+            role="status"
+          >
             <span className="visually-hidden">Loading...</span>
           </div>
           <p className="text-white mt-4">Loading movies...</p>
@@ -102,12 +103,14 @@ function MovieDetail() {
     );
   }
 
-  if (hasError === 'tooManyRequests') {
+  if (hasError === "tooManyRequests") {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-900">
         <div className="text-white text-center bg-red-600 px-8 py-4 rounded-lg shadow-lg">
           <p className="text-2xl font-bold">Too Many Requests</p>
-          <p className="text-lg">You've made too many requests. Please try again later.</p>
+          <p className="text-lg">
+            You've made too many requests. Please try again later.
+          </p>
         </div>
       </div>
     );
@@ -118,7 +121,8 @@ function MovieDetail() {
       <div className="flex justify-center items-center h-screen bg-gray-900">
         <div className="text-white text-center bg-red-600 px-8 py-4 rounded-lg shadow-lg">
           <p className="text-2xl font-bold">Error!</p>
-          <p className="text-lg">{errorMessage}</p> {/* Display specific error message */}
+          <p className="text-lg">{errorMessage}</p>{" "}
+          {/* Display specific error message */}
         </div>
       </div>
     );
@@ -126,9 +130,17 @@ function MovieDetail() {
 
   return (
     <div>
+      <Helmet>
+        <title>{movieTitle} | Movie Details</title>
+        <meta name="description" content={shortDesc} />
+        <meta property="og:title" content={movieTitle} />
+        <meta property="og:description" content={shortDesc} />
+        <meta property="og:image" content={posterIMG} />
+      </Helmet>
       <section className="text-gray-400 bg-gray-900 body-font pt-10 mt-10 md:mt-2">
         <div className="container capitalize mx-auto flex flex-col px-5 pt-24 justify-center items-center">
           <img
+            loading="lazy"
             className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded"
             alt={`Poster of ${movieTitle}`} // Descriptive alt text
             src={posterIMG}
@@ -174,7 +186,9 @@ function MovieDetail() {
                   </div>
                   <div className="flex border-t border-b mb-1 border-gray-800 py-2">
                     <span className="text-gray-400">Genres</span>
-                    <span className="ml-auto text-white">{genres.join(", ")}</span>
+                    <span className="ml-auto text-white">
+                      {genres.join(", ")}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -183,24 +197,30 @@ function MovieDetail() {
             <p className="mb-8 leading-relaxed">{longDesc}</p>
 
             {/* Screenshots Section */}
-            {availQualitySample.length > 0 ? <div className="text-gray-400 pt-4 bg-gray-900 body-font">
-              <span className="font-bold text-xl text-gray-300">Screenshots</span>
-              <div className="container px-5 py-8 mx-auto">
-                <div className="flex flex-wrap -mx-4 -mb-10 text-center">
-                  {availQualitySample.map((sample, i) => (
-                    <div key={i} className="sm:w-1/2 mb-10 px-4">
-                      <div className="rounded-lg h-64 overflow-hidden">
-                        <img
-                          alt={`Screenshot ${i + 1} of ${movieTitle}`} // Descriptive alt text
-                          className="object-cover object-center h-full w-full"
-                          src={sample}
-                        />
+            {availQualitySample.length > 0 ? (
+              <div className="text-gray-400 pt-4 bg-gray-900 body-font">
+                <span className="font-bold text-xl text-gray-300">
+                  Screenshots
+                </span>
+                <div className="container px-5 py-8 mx-auto">
+                  <div className="flex flex-wrap -mx-4 -mb-10 text-center">
+                    {availQualitySample.map((sample, i) => (
+                      <div key={i} className="sm:w-1/2 mb-10 px-4">
+                        <div className="rounded-lg h-64 overflow-hidden">
+                          <img
+                            alt={`Screenshot ${i + 1} of ${movieTitle}`} // Descriptive alt text
+                            className="object-cover object-center h-full w-full"
+                            src={sample}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div> : ""}
+            ) : (
+              ""
+            )}
 
             {/* Download Section */}
             <div className="container px-5 pt-20 mx-auto">
@@ -213,65 +233,65 @@ function MovieDetail() {
                 </p>
               </div>
 
-             {type === 'Tv Show' ? (
-               <> 
-                 <div className="flex flex-wrap lg:w-full sm:mx-auto sm:mb-2 -mx-2">
-               {availQuality.map((quality, i) => (
-                 <div key={i} className="p-2 sm:w-1/2 w-full">
-                   <Link to={`/download/${title}-${quality}`}>
-                     <div className="bg-indigo-800 hover:bg-indigo-700 rounded flex p-4 h-full items-center cursor-pointer">
-                       <svg
-                         xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 2 24 22"
-                         stroke="currentColor"
-                         strokeWidth="2"
-                         className="text-indigo-300 w-6 h-6 flex mr-4"
-                       >
-                         <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           d="M14 3v10m0 0l-4-4m4 4l4-4M8 17h8m2 0h1m-10 4h8m2-5h1"
-                         />
-                       </svg>
-                       <span className="title-font font-medium text-white">
-                         {movieTitle} - {quality}p
-                       </span>
-                     </div>
-                   </Link>
-                 </div>
-               ))}
-             </div> 
-               </>
-             ) : (
-               <div className="flex flex-wrap lg:w-full sm:mx-auto sm:mb-2 -mx-2">
-               {availQuality.map((quality, i) => (
-                 <div key={i} className="p-2 sm:w-1/2 w-full">
-                   <a href={availDownloads[i]}>
-                     <div className="bg-indigo-800 hover:bg-indigo-700 rounded flex p-4 h-full items-center cursor-pointer">
-                       <svg
-                         xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 2 24 22"
-                         stroke="currentColor"
-                         strokeWidth="2"
-                         className="text-indigo-300 w-6 h-6 flex mr-4"
-                       >
-                         <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           d="M14 3v10m0 0l-4-4m4 4l4-4M8 17h8m2 0h1m-10 4h8m2-5h1"
-                         />
-                       </svg>
-                       <span className="title-font font-medium text-white">
-                         {movieTitle} - {quality}p
-                       </span>
-                     </div>
-                   </a>
-                 </div>
-               ))}
-             </div> 
-             )}
+              {type === "Tv Show" ? (
+                <>
+                  <div className="flex flex-wrap lg:w-full sm:mx-auto sm:mb-2 -mx-2">
+                    {availQuality.map((quality, i) => (
+                      <div key={i} className="p-2 sm:w-1/2 w-full">
+                        <Link to={`/download/${title}-${quality}`}>
+                          <div className="bg-indigo-800 hover:bg-indigo-700 rounded flex p-4 h-full items-center cursor-pointer">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 2 24 22"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              className="text-indigo-300 w-6 h-6 flex mr-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14 3v10m0 0l-4-4m4 4l4-4M8 17h8m2 0h1m-10 4h8m2-5h1"
+                              />
+                            </svg>
+                            <span className="title-font font-medium text-white">
+                              {movieTitle} - {quality}p
+                            </span>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex flex-wrap lg:w-full sm:mx-auto sm:mb-2 -mx-2">
+                  {availQuality.map((quality, i) => (
+                    <div key={i} className="p-2 sm:w-1/2 w-full">
+                      <a href={availDownloads[i]}>
+                        <div className="bg-indigo-800 hover:bg-indigo-700 rounded flex p-4 h-full items-center cursor-pointer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 2 24 22"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            className="text-indigo-300 w-6 h-6 flex mr-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M14 3v10m0 0l-4-4m4 4l4-4M8 17h8m2 0h1m-10 4h8m2-5h1"
+                            />
+                          </svg>
+                          <span className="title-font font-medium text-white">
+                            {movieTitle} - {quality}p
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <ContactUs />

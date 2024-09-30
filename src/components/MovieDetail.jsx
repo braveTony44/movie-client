@@ -14,6 +14,7 @@ function MovieDetail() {
     movieTitle: "",
     releaseYear: "",
     language: "",
+    director:"",
     imdb: "",
     runtime: "",
     genres: [],
@@ -37,6 +38,7 @@ function MovieDetail() {
       setMovieData({
         shortDesc: movie.shortDesc,
         type: movie.type,
+        director:movie.director,
         longDesc: movie.longDesc,
         posterIMG: movie.posterIMG[0],
         movieTitle: movie.title,
@@ -80,6 +82,7 @@ function MovieDetail() {
     releaseYear,
     language,
     imdb,
+    director,
     runtime,
     genres,
     availQualitySample,
@@ -131,12 +134,14 @@ function MovieDetail() {
   return (
     <div>
       <Helmet>
-        <title>{movieTitle} | Movie Details</title>
-        <meta name="description" content={shortDesc} />
-        <meta property="og:title" content={movieTitle} />
-        <meta property="og:description" content={shortDesc} />
+        <title>{`${movieTitle} (${releaseYear}) | Watch Now & Download`}</title>
+        <meta name="description" content={`Watch ${movieTitle} (${releaseYear}), a ${genres.join(", ")} movie directed by ${director}. Available in ${language}, IMDB rating: ${imdb}/10. Download now!`} />
+        <meta property="og:title" content={`${movieTitle} (${releaseYear})`} />
+        <meta property="og:description" content={`A thrilling ${genres.join(", ")} movie directed by ${director}. Watch now in ${language}.`} />
         <meta property="og:image" content={posterIMG} />
+        <meta property="og:type" content="video.movie" />
       </Helmet>
+
       <section className="text-gray-400 bg-gray-900 body-font pt-10 mt-10 md:mt-2">
         <div className="container capitalize mx-auto flex flex-col px-5 pt-24 justify-center items-center">
           <img
@@ -184,6 +189,12 @@ function MovieDetail() {
                     <span className="text-gray-400">Runtime</span>
                     <span className="ml-auto text-white">{runtime}</span>
                   </div>
+
+                  <div className="flex border-t border-b mb-1 border-gray-800 py-2">
+                    <span className="text-gray-400">Director</span>
+                    <span className="ml-auto text-white">{director}</span>
+                  </div>
+
                   <div className="flex border-t border-b mb-1 border-gray-800 py-2">
                     <span className="text-gray-400">Genres</span>
                     <span className="ml-auto text-white">
@@ -208,6 +219,7 @@ function MovieDetail() {
                       <div key={i} className="sm:w-1/2 mb-10 px-4">
                         <div className="rounded-lg h-64 overflow-hidden">
                           <img
+                            loading="lazy"
                             alt={`Screenshot ${i + 1} of ${movieTitle}`} // Descriptive alt text
                             className="object-cover object-center h-full w-full"
                             src={sample}

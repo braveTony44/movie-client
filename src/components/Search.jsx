@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
-import { Helmet } from "react-helmet-async"; // Import Helmet
+import { Helmet } from "react-helmet-async";
 import { baseUrl } from "./HomePage";
 
 function Search() {
@@ -25,7 +25,7 @@ function Search() {
   // Fetch data by query
   const getDataByQuery = async () => {
     setLoading(true);
-    setError(null); // Reset error before fetching
+    setError(null);
     try {
       const res = await axios.post(`${baseUrl}/movie/search?q=${query}`);
       if (res.status === 200 && res.data.response.length > 0) {
@@ -76,12 +76,18 @@ function Search() {
 
   return (
     <>
-      {/* Helmet section for dynamic title and meta description */}
+      {/* Helmet for SEO improvement */}
       <Helmet>
-        <title>Search Results for {query} - MovieCum</title>
+        <title>{`Search Results for "${query}" - MovieCum`}</title>
         <meta
           name="description"
-          content={`Find the best results for movies related to ${query} on MovieCum.`}
+          content={`Explore the best movies related to "${query}" on MovieCum. Find your next favorite movie today.`}
+        />
+        
+        <meta property="og:title" content={`Search Results for "${query}"`} />
+        <meta
+          property="og:description"
+          content={`Find the top movies related to "${query}" on MovieCum. | Download ${movies[0].title}`}
         />
       </Helmet>
 
@@ -90,7 +96,7 @@ function Search() {
           <div className="flex flex-wrap w-full mb-20">
             <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-white">
-                Search results for: {query}
+                Search Results for: {query}
               </h1>
               <div className="h-1 w-20 bg-indigo-500 rounded"></div>
             </div>
@@ -105,7 +111,7 @@ function Search() {
                       loading="lazy"
                       className="max-h-80 rounded w-full object-cover mb-6"
                       src={movie.posterIMG}
-                      alt={movie.title}
+                      alt={`${movie.title} poster`}
                     />
                     <h3 className="tracking-widest text-indigo-400 text-xs font-medium title-font">
                       {movie.type}
